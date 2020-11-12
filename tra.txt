@@ -1,0 +1,48 @@
+public static string Translator(string strTo, string strText)
+   {
+       switch (strTo)
+       {
+           case "ar":
+               {
+                   try
+                   {
+                       string url = "https://translation.googleapis.com/language/translate/v2?key=" + ConfigurationManager.AppSettings["TranslationKey"];// key to be configured in web config or database
+                       url += "&source=" + "en";
+                       url += "&target=" + "ar";
+                       url += "&q=" + strText;
+                       WebClient client = new WebClient();
+                       client.Encoding = System.Text.Encoding.UTF8;
+
+                       string json = client.DownloadString(url);
+                       JsonData jsonData = (new JavaScriptSerializer()).Deserialize<JsonData>(json);
+                       return jsonData.Data.Translations[0].TranslatedText;
+                   }
+                   catch (Exception ex)
+                   {
+                       return strText;
+                   }
+                   break;
+               }
+           default:
+               {
+                   return strText;
+                   break;
+               }
+       }
+   }
+
+
+   public class JsonData
+   {
+       public Data Data { get; set; }
+   }
+   public class Data
+   {
+       public List<Translation> Translations { get; set; }
+   }
+   public class Translation
+   {
+       public string TranslatedText { get; set; }
+   }
+
+
