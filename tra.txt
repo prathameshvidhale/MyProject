@@ -44,5 +44,6 @@ public static string Translator(string strTo, string strText)
    {
        public string TranslatedText { get; set; }
    }
+   https://translation.googleapis.com/language/translate/v2?key=AIzaSyB4bLh6NHEzEl7AJqtPJlBbjK0Mo5z04uM
 
 
