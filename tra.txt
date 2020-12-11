@@ -45,5 +45,274 @@ public static string Translator(string strTo, string strText)
        public string TranslatedText { get; set; }
    }
    https://translation.googleapis.com/language/translate/v2?key=AIzaSyB4bLh6NHEzEl7AJqtPJlBbjK0Mo5z04uM
+   
+   public void CreatePdf()
+    {
+        try
+        {
+            Document doc = new Document(PageSize.A4);
+            var output = new FileStream(Server.MapPath("~/UploadFiles/" + hfPropertyId.Value.ToString() + "/" + "Contract.pdf"), FileMode.Create);
+            var writer = PdfWriter.GetInstance(doc, output);
+            doc.Open();
+            DataTable Dt = clsHotelPartnerUtility.HP_Get_ContractDtl(Convert.ToInt32(hfPropertyId.Value));
+            if (Dt.Rows.Count > 0)
+            {
+                Font titleFont = new Font(iTextSharp.text.Font.HELVETICA, 12, iTextSharp.text.Font.NORMAL, Color.BLACK);
+                Font textFont = new Font(iTextSharp.text.Font.HELVETICA, 12, iTextSharp.text.Font.NORMAL, Color.BLACK);
+                PdfPTable tablePolicy = new PdfPTable(6);
+                tablePolicy.WidthPercentage = 100;
+
+                var logo = iTextSharp.text.Image.GetInstance(Server.MapPath("~/Assets/HotelPartner/logo.png"));
+                logo.SetAbsolutePosition(230, 770);
+                logo.ScaleAbsoluteHeight(30);
+                logo.ScaleAbsoluteWidth(170);
+                doc.Add(logo);
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+
+                tablePolicy.AddCell(PhraseCell(new Phrase("Your Accommodation Agreement with Middleeasthotel.com", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+
+                tablePolicy.AddCell(PhraseCell(new Phrase("Between", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("Middleeasthotel.com LTD ( Part of MZAHID TRAVEL GROUP ) whoes main office is registrered at 41 Victoria street, Blackburn, United Kingdom, BB1 6DN.", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("And", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+
+                tablePolicy.AddCell(PhraseCell(new Phrase("(The Accommodation) whose details are:", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+
+                tablePolicy.AddCell(PhraseCell(new Phrase("Property Name : " + Convert.ToString(Dt.Rows[0]["PropertyName"]), titleFont), 0, false, 6, 0, 0));
+                //tablePolicy.AddCell(PhraseCell(new Phrase(Convert.ToString(Dt.Rows[0]["PropertyName"]), textFont), 0, false, 4, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+
+                tablePolicy.AddCell(PhraseCell(new Phrase("Brand Name : " + Convert.ToString(Dt.Rows[0]["Brand"]), titleFont), 0, false, 6, 0, 0));
+                //tablePolicy.AddCell(PhraseCell(new Phrase(Convert.ToString(Dt.Rows[0]["Brand"]), textFont), 0, false, 4, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+
+                tablePolicy.AddCell(PhraseCell(new Phrase("Property Address : " + Convert.ToString(Dt.Rows[0]["PropertyAddress"]), titleFont), 0, false, 6, 0, 0));
+                //tablePolicy.AddCell(PhraseCell(new Phrase(Convert.ToString(Dt.Rows[0]["PropertyAddress"]), textFont), 0, false, 4, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+
+                tablePolicy.AddCell(PhraseCell(new Phrase("Contact Person : " + Convert.ToString(Dt.Rows[0]["PropertyContactPerson"]), titleFont), 0, false, 6, 0, 0));
+                //tablePolicy.AddCell(PhraseCell(new Phrase(Convert.ToString(Dt.Rows[0]["PropertyContactPerson"]), textFont), 0, false, 4, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+
+                tablePolicy.AddCell(PhraseCell(new Phrase("Job Title : " + Convert.ToString(Dt.Rows[0]["Jobtitle"]), titleFont), 0, false, 6, 0, 0));
+                //tablePolicy.AddCell(PhraseCell(new Phrase(Convert.ToString(Dt.Rows[0]["Jobtitle"]), textFont), 0, false, 4, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+
+                tablePolicy.AddCell(PhraseCell(new Phrase("Have agreed as follows:", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+
+                tablePolicy.AddCell(PhraseCell(new Phrase("1-Commission Percentage", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+
+                tablePolicy.AddCell(PhraseCell(new Phrase("    The commission percentage shall be 15%.", textFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+
+                tablePolicy.AddCell(PhraseCell(new Phrase("2-Execution and performance", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+
+                tablePolicy.AddCell(PhraseCell(new Phrase("    The Agreement is only effective after approval and confirmation by Middleeasthotel.com.", textFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+
+                tablePolicy.AddCell(PhraseCell(new Phrase("3-General delivery terms", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+
+                tablePolicy.AddCell(PhraseCell(new Phrase("    The Agreement is subject to and governed by the General Delivery Terms", textFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("    (the 'Terms & condition'). The Accommodation declares that it has read and hereby accept the terms and conditions.", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+
+                tablePolicy.AddCell(PhraseCell(new Phrase("Date :" + " " + Convert.ToString(DateTime.Now.ToString("dd/MM/yyyy")), titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                tablePolicy.AddCell(PhraseCell(new Phrase("", titleFont), 0, false, 6, 0, 0));
+                //tablePolicy.AddCell(PhraseCell(new Phrase(new Paragraph(new Chunk(new LineSeparator(0.7F, 100.0F, Color.GRAY, Element.ALIGN_LEFT, 1)))), 0, false, 6, 0, 0));
+                doc.Add(tablePolicy);
+            }
+            doc.Close();
+            MergePDF(Server.MapPath("~/UploadFiles/" + hfPropertyId.Value.ToString() + "/" + "Contract.pdf"), Server.MapPath("~/MEHPartner/Middleeasthotel_com-B2C-Contract.pdf"));
+            Sendmail(hfUserEmailId.Value);
+            DataTable DtContract = clsHotelPartnerUtility.HP_PropertyContractDtl_SelectByPropertyId(Convert.ToInt32(hfPropertyId.Value));
+            if (DtContract.Rows.Count < 1)
+            {
+                int retvel = clsHotelPartnerUtility.HP_PropertyContractDtl_Insert(Convert.ToInt32(hfPropertyId.Value), null, Convert.ToInt32(hfUserId.Value));
+            }
+        }
+        catch
+        {
+            throw;
+        }
+    }
+    public void MergePDF(string File1, string File2)
+    {
+        string[] fileArray = new string[3];
+        fileArray[0] = File1;
+        fileArray[1] = File2;
+
+        PdfReader reader = null;
+        Document sourceDocument = null;
+        PdfCopy pdfCopyProvider = null;
+        PdfImportedPage importedPage;
+        if (File.Exists(Context.Server.MapPath("~/UploadFiles/" + hfPropertyId.Value.ToString() + "/" + "Contractcopy.pdf")))
+        {
+            File.Delete(Context.Server.MapPath("~/UploadFiles/" + hfPropertyId.Value.ToString() + "/" + "Contractcopy.pdf"));
+        }
+        string outputPdfPath = Server.MapPath("~/UploadFiles/" + hfPropertyId.Value.ToString() + "/" + "Contractcopy.pdf");
+
+        sourceDocument = new Document();
+        pdfCopyProvider = new PdfCopy(sourceDocument, new System.IO.FileStream(outputPdfPath, System.IO.FileMode.Create));
+
+        //output file Open  
+        sourceDocument.Open();
+
+
+        //files list wise Loop  
+        for (int f = 0; f < fileArray.Length - 1; f++)
+        {
+            int pages = TotalPageCount(fileArray[f]);
+
+            reader = new PdfReader(fileArray[f]);
+            //Add pages in new file  
+            for (int i = 1; i <= pages; i++)
+            {
+                importedPage = pdfCopyProvider.GetImportedPage(reader, i);
+                pdfCopyProvider.AddPage(importedPage);
+            }
+
+            reader.Close();
+        }
+        //save the output file  
+        sourceDocument.Close();
+    }
+
+    private static int TotalPageCount(string file)
+    {
+        using (StreamReader sr = new StreamReader(System.IO.File.OpenRead(file)))
+        {
+            Regex regex = new Regex(@"/Type\s*/Page[^s]");
+            MatchCollection matches = regex.Matches(sr.ReadToEnd());
+
+            return matches.Count;
+        }
+    }
+
+    public void Sendmail(string Email)
+    {
+        MailMessage mm = new MailMessage("middleeasthotel2020@gmail.com", Email);
+        mm.Subject = "MiddleEastHotel.Com";
+        mm.Body = "MiddleEastHotel.Com Contract Copy";
+        mm.Attachments.Add(new Attachment(Context.Server.MapPath("~/UploadFiles/" + hfPropertyId.Value.ToString() + "/" + "Contractcopy.pdf")));
+        mm.IsBodyHtml = true;
+        SmtpClient smtp = new SmtpClient();
+        smtp.Host = "smtp.gmail.com";
+        smtp.EnableSsl = true;
+        NetworkCredential NetworkCred = new NetworkCredential();
+        NetworkCred.UserName = "middleeasthotel2020@gmail.com";
+        NetworkCred.Password = "Pratham@123*";
+        smtp.UseDefaultCredentials = true;
+        smtp.Credentials = NetworkCred;
+        smtp.Port = 587;
+        smtp.Send(mm);
+        mm.Dispose();
+    }
+    private static PdfPCell PhraseCell(Phrase phrase, int align, bool border, int colspan)
+    {
+        PdfPCell cell = new PdfPCell(phrase);
+        cell.HorizontalAlignment = align;// //0=Left, 1=Centre, 2=Right
+        if (border == false)
+            cell.Border = Rectangle.NO_BORDER;
+        if (colspan != 0)
+            cell.Colspan = colspan;
+        return cell;
+    }
+
+    private static PdfPCell PhraseCell(Phrase phrase, int align, bool border, int colspan, int backgrouncolor, int alignment)
+    {
+        PdfPCell cell = new PdfPCell(phrase);
+        cell.HorizontalAlignment = align;// //0=Left, 1=Centre, 2=Right
+        if (border == false)
+            cell.Border = Rectangle.NO_BORDER;
+        if (colspan != 0)
+            cell.Colspan = colspan;
+        if (backgrouncolor == 1)
+        {
+            cell.BackgroundColor = new iTextSharp.text.Color(51, 102, 102); ;
+        }
+        if (alignment == 1)
+        {
+            cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+        }
+        if (alignment == 2)
+        {
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+        }
+        if (alignment == 3)
+        {
+            cell.HorizontalAlignment = Element.ALIGN_CENTER;
+        }
+
+        return cell;
+    }
+
 
 
